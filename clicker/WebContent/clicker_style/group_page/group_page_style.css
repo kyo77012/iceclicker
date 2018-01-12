@@ -1,0 +1,57 @@
+#group_page fieldset {
+  margin: auto;
+  width: 100%;
+  max-width: 562.5px;
+  padding-left: 1em;
+  padding-right: 1em;
+  opacity: 0.875;
+}
+
+
+#group_page fieldset .group_page-label {
+  background-color: DodgerBlue;
+  width: 100%;
+  text-shadow: none;
+}
+
+#group_page fieldset .group_number-label {
+  color: #CC3300;
+  text-shadow: none;
+}
+
+#group_page fieldset .list-item {
+  text-shadow: none;
+}
+
+#group_page fieldset .list-item:hover {
+  background-color: #99CCFF;
+}
+
+#group_page fieldset .evaluation {
+  width: 15%;
+  float: left;
+  text-shadow: none;
+}
+
+#group_page fieldset .approval {
+  width: 15%;
+  float: left;
+  border-radius: 10px;
+  text-shadow: none;
+}
+
+#group_page fieldset .approval:active {
+  background-color: rgba( 255, 0, 0, 0.5 );
+}
+
+
+#group_page fieldset .disapproval {
+  width: 15%;
+  float: left;
+  border-radius: 10px;
+  text-shadow: none;
+}
+
+#group_page fieldset .disapproval:active {
+  background-color: rgba( 0, 102, 0, 0.5 );
+}

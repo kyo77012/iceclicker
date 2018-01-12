@@ -1,0 +1,287 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>clickerEnhanced</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+
+
+    <style>
+      .form_container {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: 85%;
+        height: 75%;
+        opacity: 0.9;
+        text-shadow: none;
+      }
+
+      .form_container .form_header {
+        border-top-right-radius: 1em;
+        border-top-left-radius: 1em;
+        background-color: #3366FF;
+        font-size: 1.2em;
+      }
+
+      .form_label {
+        width: 25%;
+        height: 1.5em;
+        float: left;
+        border-right-width: 0;
+      }
+
+      .form_field {
+        height: 1.5em;
+      }
+
+      .form_container fieldset {
+        margin: 1em;
+      }
+
+      .form_container .form_response {
+        text-align: center;
+        color: red;
+      }
+
+      #personal_profile_form_header {
+        background-color: #6600FF;
+      }
+
+    </style>
+
+    <script>
+      var student = null;
+
+      $( document ).ready( function() {
+        $( document ).on( "pagebeforeshow", "#login_page", function() {
+          $( "#input_login_form_account" ).val( "" );
+          $( "#input_login_form_password" ).val( "" );
+        } );
+        
+        $( "#input_login_form_submit" ).click( function() {
+          $.post( "/clicker/Login",
+                  { id: $( "#input_login_form_account" ).val(),
+                    password: $( "#input_login_form_password" ).val() },
+                  function( data, status ) {
+                    var result = data;
+                    if ( status == "success" ) {
+                      // console.log( result.response_type + " " + result.json_data );
+                      if ( result.response_type != "OK" ) {
+                        $( "#label_login_form_response" ).html( JSON.parse( result.json_data ) );
+                      } // if
+                      else {
+                        $( "#label_login_form_response" ).html( "" );
+                        student = JSON.parse( result.json_data );
+
+                        $( "#id_field" ).html( student.id );
+                        $( "#name_field" ).html( student.name );
+                        $( "#group_field" ).html( student.group );
+                        $( "#remote_ctrl_num_field" ).html( student.remote_ctrl_num );
+                        $( ":mobile-pagecontainer" ).pagecontainer( "change",
+                                                                    "#personal_profile_page",
+                                                                    { transition: "flip", reverse: false } );
+                        
+                        
+                        $( "#input_personal_profile_id" ).attr( "value", student.id );
+                        $( "#input_personal_profile_name" ).attr( "value", student.name );
+                        $( "#input_personal_profile_group" ).attr( "value", student.group );
+                        $( "#input_personal_profile_remote_ctrl_num" ).attr( "value", student.remote_ctrl_num );
+                        $( "#input_personal_profile_cid" ).attr( "value", student.cid );
+                      } // else
+                    } // if
+                  } );
+        } );
+
+
+
+        $( document ).on( "pageshow", "#personal_profile_page", function() {
+          if ( student == null ) {
+            $( ":mobile-pagecontainer" ).pagecontainer( "change",
+                                                        "#login_page",
+                                                        { transition: "fade", reverse: false } );
+          } // if
+        } );
+
+        $( "#input_personal_profile_form_change_password" ).click( function() {
+          $( ":mobile-pagecontainer" ).pagecontainer( "change",
+                                                      "#change_password_page",
+                                                      { transition: "flip", reverse: false } );
+        } );
+
+        $( "#input_personal_profile_form_logout" ).click( function() {
+          student = null;
+          $( ":mobile-pagecontainer" ).pagecontainer( "change",
+                                                      "#login_page",
+                                                      { transition: "flip", reverse: true } );
+        } );
+
+
+
+        $( document ).on( "pagebeforeshow", "#change_password_page", function() {
+          $( "#input_change_password_form_account" ).val( "" );
+          $( "#input_change_password_form_password" ).val( "" );
+          $( "#input_change_password_form_new_password" ).val( "" );
+          $( "#input_change_password_form_retype_new_password" ).val( "" );
+        } );
+
+        $( document ).on( "pageshow", "#change_password_page", function() {
+          if ( student == null ) {
+            $( ":mobile-pagecontainer" ).pagecontainer( "change",
+                                                        "#login_page",
+                                                        { transition: "fade", reverse: false } );
+          } // if
+        } );
+
+        $( "#input_change_password_form_submit" ).click( function() {
+          if ( $( "#input_change_password_form_new_password" ).val() == $( "#input_change_password_form_retype_new_password" ).val() ) {
+            $.post( "/clicker/ChangePassword",
+                    { id: $( "#input_change_password_form_account" ).val(),
+                      password: $( "#input_change_password_form_password" ).val(),
+                      newPassword: $( "#input_change_password_form_new_password" ).val() },
+                    function( data, status ) {
+                      var result = data;
+                      if ( status == "success" ) {
+                        // console.log( result.response_type + " " + result.json_data );
+                        if ( result.response_type != "OK" ) {
+                          $( "#label_change_password_form_response" ).html( JSON.parse( result.json_data ) );
+                        } // if
+                        else {
+                          $( "#label_change_password_form_response" ).html( "" );
+                          $( ":mobile-pagecontainer" ).pagecontainer( "change",
+                                                                    "#personal_profile_page",
+                                                                    { transition: "flip", reverse: true } );
+                        } // else
+                      } // if
+                    } );
+          } // if
+          else {
+            $( "#label_change_password_form_response" ).html( "新密碼輸入錯誤!" );
+          } // else
+        } );
+
+        $( "#input_change_password_form_cancel" ).click( function() {
+          $( ":mobile-pagecontainer" ).pagecontainer( "change",
+                                                      "#personal_profile_page",
+                                                      { transition: "flip", reverse: true } );
+        } );
+      } );
+    </script>
+  </head>
+
+
+  <body oncontextmenu="return false;"
+        ondragstart="return false;"
+        onselectstart="return false;">
+    <div id="login_page" data-role="page" data-theme="b">
+      <div id="login_form_container" class="form_container ui-mini">
+        <div id="login_form">
+          <div id="login_form_header" class="form_header" data-role="header">
+            <h1>按按按登入</h1>
+          </div>
+          <fieldset>
+            <label for="input_login_form_account">帳號</label>
+            <input id="input_login_form_account" type="text" name="id" data-clear-btn="true" autocomplete="off"
+                   data-theme="a" placeholder="account">
+            <label for="input_login_form_password">密碼</label>
+            <input id="input_login_form_password" type="password" name="password" data-clear-btn="true" autocomplete="off"
+                   data-theme="a" placeholder="password">
+          </fieldset>
+          <fieldset>
+            <input id="input_login_form_submit" class="form_submit" type="button" value="登入" data-theme="a">
+          </fieldset>
+          <fieldset>
+            <label id="label_login_form_response" class="form_response"></label>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+
+    <div id="personal_profile_page" data-role="page" data-theme="b">
+      <ul data-role="listview" class="ui-mini">
+        <li>
+          <div id="personal_profile_form_header" class="form_header" data-role="header">
+            <h1>Welcome</h1>
+          </div>
+        </li>
+        <li>
+          <div id="label_id" class="form_label ui-btn">學號</div>
+          <div id="id_field" class="form_field ui-btn"></div>
+        </li>
+        <li>
+          <div id="label_name" class="form_label ui-btn">姓名</div>
+          <div id="name_field" class="form_field ui-btn"></div>
+        </li>
+        <li>
+          <div id="label_group" class="form_label ui-btn">組別</div>
+          <div id="group_field" class="form_field ui-btn"></div>
+        </li>
+        <li>
+          <div id="label_remote_ctrl_num" class="form_label ui-btn">遙控器號碼</div>
+          <div id="remote_ctrl_num_field" class="form_field ui-btn"></div>
+        </li>
+        <li class="ui-grid-a">
+          <div class="ui-block-a">
+            <input id="input_personal_profile_form_change_password" type="button" value="修改密碼" data-theme="a">
+          </div>
+          <div class="ui-block-b">
+            <input id="input_personal_profile_form_logout" type="button" value="登出" data-theme="a">
+          </div>
+        </li>
+        <li>
+          <input id="input_personal_profile_form_enter_clicker" type="submit" form="personal_profile_form" value="進入按按按" data-theme="a">
+        </li>
+      </ul>
+      
+      <form id="personal_profile_form" method="post" action="clickerEnhanced.jsp" target="_self" style="display:none;">
+        <input id="input_personal_profile_id" type="text" name="id" value="">
+        <input id="input_personal_profile_name" type="text" name="name" value="">
+        <input id="input_personal_profile_group" type="text" name="group" value="">
+        <input id="input_personal_profile_remote_ctrl_num" type="text" name="remote_ctrl_num" value="">
+        <input id="input_personal_profile_cid" type="text" name="cid" value="">
+      </form>
+    </div>
+
+    <div id="change_password_page" data-role="page" data-theme="b">
+      <div id="change_password_form_container" class="form_container ui-mini">
+        <div id="change_password_form">
+          <div id="change_password_form_header" class="form_header" data-role="header">
+            <h1>修改密碼</h1>
+          </div>
+          <fieldset>
+            <label for="input_change_password_form_account">帳號</label>
+            <input id="input_change_password_form_account" type="text" name="id" data-clear-btn="true" autocomplete="off"
+                   data-theme="a" placeholder="account">
+            <label for="input_change_password_form_password">密碼</label>
+            <input id="input_change_password_form_password" type="password" name="password" data-clear-btn="true" autocomplete="off"
+                   data-theme="a" placeholder="password">
+            <label for="input_change_password_form_new_password">新密碼</label>
+            <input id="input_change_password_form_new_password" type="password" name="newPassword" data-clear-btn="true" autocomplete="off"
+                   data-theme="a" placeholder="new password">
+
+            <label for="input_change_password_form_retype_new_password">再次輸入新密碼</label>
+            <input id="input_change_password_form_retype_new_password" type="password" name="retypeNewPassword" data-clear-btn="true" autocomplete="off"
+                   data-theme="a" placeholder="retype new password">
+          </fieldset>
+          <div class="ui-grid-a">
+            <div class="ui-block-a">
+              <input id="input_change_password_form_submit" class="form_submit" type="button" value="確定" data-theme="a">
+            </div>
+            <div class="ui-block-b">
+              <input id="input_change_password_form_cancel" class="form_cancel" type="button" value="取消" data-theme="a">
+            </div>
+          </div>
+          <fieldset>
+            <label id="label_change_password_form_response" class="form_response"></label>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+#rank_page fieldset {
+  margin: auto;
+  width: 100%;
+  max-width: 562.5px;
+  padding-left: 1em;
+  padding-right: 1em;
+  opacity: 0.875;
+}
+
+#rank_page fieldset .rank_page-label {
+  background-color: DodgerBlue;
+  width: 100%;
+  text-shadow: none;
+}
+
+#rank_page fieldset .student-group-info-label {
+  background-color: #f6f6f6;
+  width: 100%;
+  text-shadow: none;
+}
+
+#rank_page fieldset .student-group-info {
+  margin: 0.5em;
+}
+
+#rank_page fieldset .student-group-info .ui-block-a {
+  text-align: right;
+}
+
+#rank_page fieldset .rank-label {
+  color: #CC3300;
+  text-shadow: none;
+}
+
+#rank_page fieldset .group-label {
+  color: #339900;
+  text-shadow: none;
+}
+
+#rank_page fieldset .score-label {
+  text-shadow: none;
+}
+
+#rank_page fieldset .list-item {
+}
+
+#rank_page fieldset .list-item:hover {
+  background-color: #99CCFF;
+}
+
+#rank_page fieldset .rank {
+  text-shadow: none;
+}
+
+#rank_page fieldset .group {
+  text-shadow: none;
+}
+
+#rank_page fieldset .score {
+  text-shadow: none;
+}

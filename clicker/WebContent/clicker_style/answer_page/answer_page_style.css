@@ -1,0 +1,87 @@
+#answer_page {
+  // background: rgba( 235, 235, 235, 1 );
+}
+
+#options_form_container {
+  margin: auto;
+  max-width: 562.5px;
+}
+
+#basketball_court {
+  margin: auto;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+
+#basketball_stands {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+}
+
+#basketball_rim_far {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 3;
+}
+
+#basketball_rim_near {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 4;
+}
+
+#basketball {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 3;
+}
+
+.player {
+   width: 64px;
+   height: 80px;
+   position: absolute;
+   left: 0;
+   top: 0;
+   z-index: 2;
+}
+
+
+
+
+#options_form_container table {
+  background: #333;
+  border-collapse: collapse;
+  margin-top: 0.25em;
+}
+
+#options_form_container table tr td {
+  font-size: 1.5em;
+  border-style: solid;
+  border-color: #181818;
+}
+
+#options_form_container table tr .player-face {
+  width: 25%;
+  text-align: center;
+  padding: 0;
+}
+
+#options_form_container table tr .player-name {
+  width: 75%;
+  color: white;
+  padding: 0;
+  padding-right: 1em;
+}
+
+#options_form label {
+  text-shadow: none;
+}

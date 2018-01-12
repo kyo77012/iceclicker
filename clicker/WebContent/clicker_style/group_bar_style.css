@@ -1,0 +1,30 @@
+#group-bar-container {
+  background: transparent;
+  border-width: 0px;
+}
+
+
+
+#group-bar-control-btn {
+  background: #3366FF;
+  border: 3px solid #3366FF;
+  border-radius: 8px;
+  font-size: 1em;
+  text-shadow: none;
+}
+
+#group-bar-control-btn:active {
+  border-color: #FF9900;
+  background: #FF9900;
+}
+
+
+
+
+#group-bar {
+  text-align: center;
+}
+
+.my-group-member {
+  width: 100%;
+}
